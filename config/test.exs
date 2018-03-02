@@ -13,7 +13,7 @@ config :logger, level: :warn
 config :catcasts, Catcasts.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "z",
   database: "catcasts_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
