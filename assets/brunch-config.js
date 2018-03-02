@@ -50,6 +50,16 @@ exports.config = {
     }
   },
 
+  sass: {
+      options: {
+        includePaths: [
+          'node_modules/foundation-sites/scss',
+        ]
+      }
+    }
+    // Add the code above
+  },
+
   modules: {
     autoRequire: {
       "js/app.js": ["js/app"]
