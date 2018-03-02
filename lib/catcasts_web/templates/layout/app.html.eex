@@ -31,5 +31,11 @@
 
     </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+
+    <!-- Foundation script -->
+    <script>
+      $(document).foundation();
+    </script>
+    <!-- here it is -->
   </body>
 </html>
