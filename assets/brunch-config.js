@@ -47,10 +47,9 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/vendor/]
-    }
-  },
-
-  sass: {
+    },  // Don't forget to include the comma here
+      // Add the code below
+    sass: {
       options: {
         includePaths: [
           'node_modules/foundation-sites/scss',
