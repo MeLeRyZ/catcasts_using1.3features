@@ -52,7 +52,7 @@ config :phoenix, :stacktrace_depth, 20
 config :catcasts, Catcasts.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "z",
   database: "catcasts_dev",
   hostname: "localhost",
   pool_size: 10
