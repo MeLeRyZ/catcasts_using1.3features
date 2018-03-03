@@ -19,6 +19,13 @@ defmodule CatcastsWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/auth", CatcastsWeb do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request #for any auth. google, facebook and others
+    get "/:provider/callback", AuthController, :new
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", CatcastsWeb do
   #   pipe_through :api
