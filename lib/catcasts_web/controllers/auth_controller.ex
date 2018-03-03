@@ -3,6 +3,7 @@ defmodule CatcastsWeb.AuthController do
   plug Ueberauth
 
   alias Catcasts.User
+  alias Catcasts.Repo
 
   def new(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     user_params = %{token: auth.credentials.token,
