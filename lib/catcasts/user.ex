@@ -4,6 +4,7 @@ defmodule Catcasts.User do
   alias Catcasts.User
 
   schema "users" do
+    field(:token, :string)
     field(:email, :string)
     field(:first_name, :string)
     field(:last_name, :string)
