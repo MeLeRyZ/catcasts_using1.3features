@@ -15,38 +15,21 @@ defmodule CatcastsWeb.VideoController do
   end
 
   def create(conn, %{"video" => video_params}) do
-    case Videos.create_video(video_params) do
-      {:ok, video} ->
-        conn
-        |> put_flash(:info, "Video created successfully.")
-        |> redirect(to: video_path(conn, :show, video))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+      case YoutubeData.has_valid_regex?(video_params) do
+        nil ->
+          changeset = Video.changeset(%Video{}, video_params)
+
+          conn
+          |> put_flash(:error, "Invalid YouTube URL")
+          |> render("new.html", changeset: changeset)
+        regex ->
+          YoutubeData.create_or_show_video(conn, regex)
+      end
     end
-  end
 
   def show(conn, %{"id" => id}) do
     video = Videos.get_video!(id)
     render(conn, "show.html", video: video)
-  end
-
-  def edit(conn, %{"id" => id}) do
-    video = Videos.get_video!(id)
-    changeset = Videos.change_video(video)
-    render(conn, "edit.html", video: video, changeset: changeset)
-  end
-
-  def update(conn, %{"id" => id, "video" => video_params}) do
-    video = Videos.get_video!(id)
-
-    case Videos.update_video(video, video_params) do
-      {:ok, video} ->
-        conn
-        |> put_flash(:info, "Video updated successfully.")
-        |> redirect(to: video_path(conn, :show, video))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", video: video, changeset: changeset)
-    end
   end
 
   def delete(conn, %{"id" => id}) do
