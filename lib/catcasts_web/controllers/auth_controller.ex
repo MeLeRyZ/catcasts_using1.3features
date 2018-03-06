@@ -1,6 +1,7 @@
 defmodule CatcastsWeb.AuthController do
   use CatcastsWeb, :controller
   plug(Ueberauth)
+
   alias Catcasts.User
   alias Catcasts.Repo
 
@@ -26,20 +27,10 @@ defmodule CatcastsWeb.AuthController do
         |> put_session(:user_id, user.id)
         |> redirect(to: video_path(conn, :index))
 
-      {:index, _reason} ->
+      {:error, _reason} ->
         conn
         |> put_flash(:error, "Error signing in")
         |> redirect(to: page_path(conn, :index))
-    end
-  end
-
-  def insert_or_update_user(changeset) do
-    case Repo.get_by(User, email: changeset.changes.email) do
-      nil ->
-        Repo.insert(changeset)
-
-      user ->
-        {:ok, user}
     end
   end
 
@@ -47,5 +38,15 @@ defmodule CatcastsWeb.AuthController do
     conn
     |> configure_session(drop: true)
     |> redirect(to: page_path(conn, :index))
+  end
+
+  defp insert_or_update_user(changeset) do
+    case Repo.get_by(User, email: changeset.changes.email) do
+      nil ->
+        Repo.insert(changeset)
+
+      user ->
+        {:ok, user}
+    end
   end
 end

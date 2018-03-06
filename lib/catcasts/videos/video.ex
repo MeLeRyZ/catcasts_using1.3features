@@ -2,7 +2,8 @@ defmodule Catcasts.Videos.Video do
   use Ecto.Schema
   import Ecto.Changeset
   alias Catcasts.Videos.Video
-
+  alias Catcasts.User
+  use Rummage.Ecto
 
   schema "videos" do
     field :duration, :string

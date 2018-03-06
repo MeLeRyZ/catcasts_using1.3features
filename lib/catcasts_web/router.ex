@@ -10,15 +10,25 @@ defmodule CatcastsWeb.Router do
     plug(Catcasts.Plugs.SetUser)
   end
 
+  pipeline :auth do
+    plug(CatcastsWeb.Plugs.RequireAuth)
+  end
+
   pipeline :api do
     plug(:accepts, ["json"])
+  end
+
+  scope "/", CatcastsWeb do
+    pipe_through([:browser, :auth])
+
+    resources("/videos", VideoController, only: [:new, :create])
   end
 
   scope "/", CatcastsWeb do
     # Use the default browser stack
     pipe_through(:browser)
 
-    resources "/videos", VideoController, except: [:edit, :update]
+    resources("/videos", VideoController, only: [:index, :show, :delete])
     get("/", PageController, :index)
   end
 
@@ -26,7 +36,6 @@ defmodule CatcastsWeb.Router do
     pipe_through(:browser)
 
     get("/signout", AuthController, :delete)
-    # for any auth. google, facebook and others
     get("/:provider", AuthController, :request)
     get("/:provider/callback", AuthController, :new)
   end

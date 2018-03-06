@@ -22,6 +22,10 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+  # Configure Rummage Phoenix
+  config :rummage_ecto, Rummage.Ecto,
+    default_repo: Catcasts.Repo,
+    default_per_page: 5
   # Configure Google OAuth
   config :ueberauth, Ueberauth,
     providers: [
